@@ -44,8 +44,8 @@ const SignUpScreen = () => {
         console.warn('Register pressed')
 
         signUp();
-        
-        navigation.navigate('Email Confirmation')
+        //FRONT END: maybe a screen that says to go verify your email
+        navigation.navigate('Home')
     }
 
     // what happens when user presses "Terms of Use"

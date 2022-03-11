@@ -27,16 +27,19 @@ const ResetPasswordScreen = () => {
     // what happens when user presses "Sign In"
     const onSignInPressed = () => {
         console.warn('Sign In pressed')
-        resetPassword();
+        
         navigation.navigate('Sign In')
     }
 
     // what happens when user presses "Send"
     const onSendPressed = () => {
         console.warn('Send pressed')
+        resetPassword();
+        //FRONT END: SCREEN THAT SAYS GO CHECK YOUR EMAIL
+        navigation.navigate('Sign In')
 
         //need to set up send code programatically
-        navigation.navigate('Confirm Reset Password')
+        //navigation.navigate('Confirm Reset Password')
     }
 
     // setting up how the actual page looks
@@ -49,7 +52,7 @@ const ResetPasswordScreen = () => {
                 </Text>
 
                 <CustomInput 
-                    placeholder="Enter your username" 
+                    placeholder="Enter your email" 
                     value={email}
                     setValue={setEmail}
                 />
