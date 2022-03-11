@@ -26,21 +26,16 @@ const SignInScreen = () => {
     const navigation = useNavigation()
 
 
-    const userAuth = async function () {
-        const currUsername = username;
-        const currPassword = password;
-        return await Parse.User.logIn(currUsername, currPassword).then(async (loggedInUser) => {
-            console.log('User '+ loggedInUser.get('username') + " " + loggedInUser('password') + "has signed in!");
+    function logIn(){
+        var user = Parse.User.logIn(username, password).then(function(user){
+            console.log('User created successful with name: ' + user.get("username") + ' and email: ' + user.get("email"));
+            navigation.navigate('Home');
+        }).catch(function(error){
+            console.log("Error: " + error.code + " " + error.message);
+            //FRONT END: maybe add an error message saying either username or password was invalid
+         });
+    }
 
-            const currentUser = await Parse.User.currentAsync();
-            console.log(loggedInUser == currentUser);
-            return true;
-        })
-        .catch((error) => {
-            console.log('Error: ',error.message);
-            return false
-        });
-    };
 
     // what happens when user presses "Sign In"
     const onSignInPressed = async () => {
@@ -50,14 +45,7 @@ const SignInScreen = () => {
         //backend call needed here (@kayton, @celia)
         //if success, navigate to home screen
 
-        if(userAuth()){
-            console.log("yay");
-            navigation.navigate('Home')
-        }
-        else{
-            navigation.navigate('Sign In') //not working
-            console.log("error");
-        }
+        logIn();
     }
 
     // what happens when user presses "Forgot Password"

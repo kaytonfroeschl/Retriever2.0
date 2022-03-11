@@ -1,19 +1,33 @@
+/* eslint-disable prettier/prettier */
 import React, {useState} from 'react'
 import {View, Text, StyleSheet, ScrollView } from 'react-native'
 import CustomInput from '../../components/CustomInput'
 import CustomButton from '../../components/CustomButton'
 import { useNavigation } from '@react-navigation/native'
 
+import Parse from 'parse/react-native.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+Parse.initialize('COSMSEofVVIkbn5pxmQSHn9P3a3NFWziKBEw3WIg', 'ybSPNJNOPdj2lypQ6T9q7lUBmkrHCs9y7jX9pMzh');
+Parse.serverURL = 'https://parseapi.back4app.com/';
+
 // screen used to reset the password
 const ResetPasswordScreen = () => {
-    const [username, setUsername] = useState('')
+    const [email, setEmail] = useState('')
 
     const navigation = useNavigation()
+
+    function resetPassword() {
+        Parse.User.requestPasswordReset(email).then(function() {
+          console.log("Password reset request was sent successfully");
+        }).catch(function(error) {
+          console.log("The login failed with error: " + error.code + " " + error.message);
+        });
+    }
 
     // what happens when user presses "Sign In"
     const onSignInPressed = () => {
         console.warn('Sign In pressed')
-
+        resetPassword();
         navigation.navigate('Sign In')
     }
 
@@ -36,8 +50,8 @@ const ResetPasswordScreen = () => {
 
                 <CustomInput 
                     placeholder="Enter your username" 
-                    value={username}
-                    setValue={setUsername}
+                    value={email}
+                    setValue={setEmail}
                 />
 
                 <CustomButton

@@ -18,17 +18,16 @@ const SignUpScreen = () => {
 
     const navigation = useNavigation()
 
-    async function addUser(){
-        const newUser = new Parse.Object('UsersTest');
-        newUser.set("username", username);
-        newUser.set("email", email);
-        newUser.set("password", password);
-        try{
-            let result = await newUser.save();
-            console.log('Created person: '+ result.id);
-        }catch(error){
-            console.log('Error saving new person: ', error);
-        }
+    async function signUp(){
+        var user = new Parse.User();
+        user.set("username", username);
+        user.set("email", email);
+        user.set("password", password);
+        user.signUp().then(function(user) {
+            console.log('User created successful with name: ' + user.get("username") + ' and email: ' + user.get("email"));
+        }).catch(function(error){
+            console.log("Error: " + error.code + " " + error.message);
+        });
     }
 
     
@@ -44,7 +43,7 @@ const SignUpScreen = () => {
     const onRegisterPressed = () => {
         console.warn('Register pressed')
 
-        addUser();
+        signUp();
         
         navigation.navigate('Email Confirmation')
     }
